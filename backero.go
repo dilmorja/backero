@@ -22,7 +22,7 @@ type Target struct {
 }
 
 type Cowboy struct {
-	sync.RWMutex
+	m 			sync.RWMutex
 	Targets map[string]*Target
 }
 
@@ -30,15 +30,15 @@ func (c *Cowboy) NilTargets() bool { return bool(c.Targets == nil) }
 
 func (c *Cowboy) Load(target *Target) error {
 	if !c.NilTargets() {
-		c.RLock()
+		c.m.RLock()
 		if _, ok := c.Targets[target.ID.String()]; !ok {
-			c.RUnlock()
-			c.Lock()
+			c.m.RUnlock()
+			c.m.Lock()
 			c.Targets[target.ID.String()] = target
-			c.Unlock()
+			c.m.Unlock()
 			return nil
 		}
-		c.RUnlock()
+		c.m.RUnlock()
 		return nil
 	}
 	return errNilTargets
