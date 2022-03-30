@@ -58,3 +58,18 @@ func Test_Load(t *testing.T) {
 
 	Verify(t, expected, x.Targets[expected].ID.String())
 }
+
+func Test_New(t *testing.T) {
+	instance := New()
+	if err := instance.Load(&Target{
+		ID: UTI{
+			Name: "a",
+			Version: "b",
+			Hosts: "c",
+		},
+	}); err != nil {
+		t.Error(err)
+	}
+
+	Verify(t, "a", instance.Targets["a_b_c"].ID.Name)
+}

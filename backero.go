@@ -45,4 +45,12 @@ func (c *Cowboy) Load(target *Target) error {
 	return errNilTargets
 }
 
+func New() *Cowboy {
+	return &Cowboy{
+		new(Target),
+		sync.RWMutex{},
+		make(map[string]*Target, 0),
+	}
+}
+
 var errNilTargets error = errors.New("Nil pointer reference")
