@@ -54,3 +54,23 @@ func New() *Cowboy {
 }
 
 var errNilTargets error = errors.New("Nil pointer reference")
+var errTargetNotExist error = errors.New("Target does not exist")
+
+func (c *Cowboy) Use(tarname string) error {
+	if !c.NilTargets() {
+		c.m.RLock()
+		if tar, ok := c.Targets[tarname]; ok {
+			var tars map[string]*Target = c.Targets
+			c.m.RUnlock()
+			c = &Cowboy{
+				tar,
+				sync.RWMutex{},
+				tars,
+			}
+			return nil
+		}
+		c.m.RUnlock()
+		return errTargetNotExist
+	}
+	return errNilTargets
+}

@@ -11,6 +11,14 @@ func Verify[TEG comparable](t *testing.T, expected TEG, got TEG) {
 	}
 }
 
+var testTarget *Target = &Target{
+	ID: UTI{
+		Name: "test",
+		Version: "v0",
+		Hosts: "cp",
+	},
+}
+
 func Test_NilTargets(t *testing.T) {
 	Verify(t, true, new(Cowboy).NilTargets())
 }
@@ -72,4 +80,18 @@ func Test_New(t *testing.T) {
 	}
 
 	Verify(t, "a", instance.Targets["a_b_c"].ID.Name)
+}
+
+func Test_Use(t *testing.T) {
+	x := New()
+
+	if err := x.Load(testTarget); err != nil {
+		t.Error(err)
+	}
+
+	if err := x.Use(testTarget.ID.String()); err != nil {
+		t.Error(err)
+	}
+
+	Verify(t, "test", x.ID.Name)
 }
