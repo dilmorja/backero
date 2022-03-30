@@ -9,5 +9,15 @@ func Verify[TEG comparable](t *testing.T, expected TEG, got TEG) {
 }
 
 func Test_NilTargets(t *testing.T) {
-	Verify(t, new(Cowboy).NilTargets(), true)
+	Verify(t, true, new(Cowboy).NilTargets())
+}
+
+func Test_UTI(t *testing.T) {
+	x := UTI{
+		Name: "test",
+		Version: "v0",
+		Hosts: "cp",
+	}
+
+	Verify(t, "test_v0_cp", x.String())
 }
