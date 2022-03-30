@@ -7,3 +7,11 @@
 		Backero supports generic transpilers, resulting in a modular collection of human-readable targets. Also, intermediate representations will help you create new and better compilers.
 	</p>
 </div>
+
+## Why Go (Golang)?
+
+It's simple: go is easy to learn, relatively modern, scalable, and its standard modular structure is intuitive.
+
+## License
+
+[BSD 3-Clause](LICENSE)
