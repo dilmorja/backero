@@ -8,6 +8,33 @@
 	</p>
 </div>
 
+## Usage
+
+> NOTE: This sample code is currently a long way from being implementable, but it is a goal.
+
+```go
+package main
+
+import(
+	"fmt"
+
+	"github.com/dilmorja/backero"
+	"github.com/dilmorja/backero/targets/ts"
+	"github.com/dilmorja/backero/targets/ts/types"
+)
+
+func main() {
+	vaquero := backero.New()
+	vaquero.LoadAndUse(ts.TypeScript())
+
+	mod := vaquero.InitModule("constant")
+	mod.Const("x", types.String, "This is a constant", false)
+
+	fmt.Println(mod.String()) // const x: string = "This is a constant"
+	fmt.Println(mod.Memory["const"]["x"].Content()) // "This is a constant"
+}
+```
+
 ## Why Go (Golang)?
 
 It's simple: go is easy to learn, relatively modern, scalable, and its standard modular structure is intuitive.
