@@ -39,8 +39,9 @@ func Test_TargetID(t *testing.T) {
 
 func Test_Load(t *testing.T) {
 	x := &Cowboy{
-		m: sync.RWMutex{},
-		Targets: make(map[string]*Target, 0),
+		new(Target),
+		sync.RWMutex{},
+		make(map[string]*Target, 0),
 	}
 
 	if err := x.Load(&Target{

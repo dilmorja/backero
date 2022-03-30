@@ -22,6 +22,7 @@ type Target struct {
 }
 
 type Cowboy struct {
+	*Target
 	m 			sync.RWMutex
 	Targets map[string]*Target
 }
