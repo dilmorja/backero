@@ -1,3 +1,6 @@
+// Copyright (c) 2022, Daniel M. Jaén
+// All rights reserved.
+
 package backero
 
 import(
@@ -13,22 +16,27 @@ type UTI struct {
 	Hosts 	string
 }
 
+// Uses the values of the fields and returns a formatted string
 func (u UTI) String() string {
 	return fmt.Sprintf("%s_%s_%s", u.Name, u.Version, u.Hosts)
 }
 
+// An implementation that handles code generation.
 type Target struct {
 	ID UTI
 }
 
+// An implementation that handles targets
 type Cowboy struct {
 	*Target
 	m 			sync.RWMutex
 	Targets map[string]*Target
 }
 
+// Quickly check if the map that stores the targets is not nil
 func (c *Cowboy) NilTargets() bool { return bool(c.Targets == nil) }
 
+// Append a new target to the map
 func (c *Cowboy) Load(target *Target) error {
 	if !c.NilTargets() {
 		c.m.RLock()
@@ -45,6 +53,7 @@ func (c *Cowboy) Load(target *Target) error {
 	return errNilTargets
 }
 
+// Create an empty (but not nil) *Cowboy structure
 func New() *Cowboy {
 	return &Cowboy{
 		new(Target),
@@ -56,6 +65,8 @@ func New() *Cowboy {
 var errNilTargets error = errors.New("Nil pointer reference")
 var errTargetNotExist error = errors.New("Target does not exist")
 
+// Returns a copy of the previous structure
+// that only replaces the target to use.
 func (c *Cowboy) Use(tarname string) (error, *Cowboy) {
 	if !c.NilTargets() {
 		c.m.RLock()
