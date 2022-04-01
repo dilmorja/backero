@@ -82,3 +82,18 @@ func (c *Cowboy) Use(tarname string) error {
 	}
 	return errNilTargets
 }
+
+// Load and use the given target
+func (c *Cowboy) LoadAndUse(tar *Target) error {
+	if err := c.Load(tar); err != nil {
+		return err
+	}
+
+	c.m.Lock()
+	// The corresponding function is not used 
+	// to avoid the unnecessary computation that this entails.
+	c.Target = tar
+	c.m.Unlock()
+
+	return nil
+}

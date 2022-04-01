@@ -99,3 +99,12 @@ func Test_Use(t *testing.T) {
 
 	Verify(t, "test", x.ID.Name)
 }
+
+func Test_LoadAndUse(t *testing.T) {
+	x := New()
+	if err := x.LoadAndUse(testTarget); err != nil {
+		t.Error(err)
+	}
+
+	Verify(t, "test", x.ID.Name)
+}
