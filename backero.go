@@ -67,20 +67,18 @@ var errTargetNotExist error = errors.New("Target does not exist")
 
 // Returns a copy of the previous structure
 // that only replaces the target to use.
-func (c *Cowboy) Use(tarname string) (error, *Cowboy) {
+func (c *Cowboy) Use(tarname string) error {
 	if !c.NilTargets() {
 		c.m.RLock()
 		if tar, ok := c.Targets[tarname]; ok {
-			var tars map[string]*Target = c.Targets
 			c.m.RUnlock()
-			return nil, &Cowboy{
-				tar,
-				c.m,
-				tars,
-			}
+			c.m.Lock()
+			c.Target = tar
+			c.m.Unlock()
+			return nil
 		}
 		c.m.RUnlock()
-		return errTargetNotExist, nil
+		return errTargetNotExist
 	}
-	return errNilTargets, nil
+	return errNilTargets
 }

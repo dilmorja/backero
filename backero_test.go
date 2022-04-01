@@ -92,11 +92,10 @@ func Test_Use(t *testing.T) {
 		t.Error(err)
 	}
 
-	err, y := x.Use(testTarget.ID.String())
-	if err != nil {
+	if err := x.Use(testTarget.ID.String()); err != nil {
 		t.Error(err)
 	}
 
 
-	Verify(t, "test", y.ID.Name)
+	Verify(t, "test", x.ID.Name)
 }
