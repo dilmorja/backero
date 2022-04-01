@@ -64,7 +64,7 @@ func (c *Cowboy) Use(tarname string) (error, *Cowboy) {
 			c.m.RUnlock()
 			return nil, &Cowboy{
 				tar,
-				sync.RWMutex{},
+				c.m,
 				tars,
 			}
 		}
