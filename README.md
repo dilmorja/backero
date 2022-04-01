@@ -8,7 +8,7 @@
 	</p>
 </div>
 
-## Usage
+## Example usage
 
 > NOTE: This sample code is currently a long way from being implementable, but it is a goal.
 
