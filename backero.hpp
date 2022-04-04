@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdio>
+#include <vector>
 
 namespace back {
 
@@ -27,12 +28,25 @@ namespace back {
   }
 
   std::string UTI::toString() {
+    const char* prestring = "%s_%s_%s";
+
+    int tmo = snprintf(nullptr, 0, prestring,
+      this->name,
+      this->version,
+      this->hosts);
+
+    std::vector<char> buffer(tmo+1);
+
+    snprintf(&buffer[0], buffer.size(), prestring,
+      this->name,
+      this->version,
+      this->hosts);
+
     std::string ready_string;
-    char* buf;
 
-    sprintf(buf, "%s_%s_%s", this->name, this->version, this->hosts);
-
-    ready_string.assign(buf, sizeof(buf));
+    for (char b: buffer) {
+      ready_string.push_back(b);
+    }
 
     return ready_string;
   }
