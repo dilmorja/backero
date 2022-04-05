@@ -3,6 +3,7 @@ package ts
 import(
 	"github.com/dilmorja/backero"
 	"github.com/dilmorja/backero/targets/ts/modules"
+	"github/dilmorja/backero/framework/utils"
 )
 
 type TS_t backero.Target
@@ -20,7 +21,5 @@ func TypeScript() *backero.Target {
 		},
 	}
 
-	r := backero.Target(this)
-
-	return &r
+	return utils.ToTarget(this)
 }
